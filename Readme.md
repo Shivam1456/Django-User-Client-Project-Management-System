@@ -305,7 +305,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
        }
    ]
    ```
-   <img width="1559" height="418" alt="image" src="https://github.com/user-attachments/assets/07e920e1-3e09-4c51-8d95-ffef07c49f7f" />
+<img width="1559" height="418" alt="image" src="https://github.com/user-attachments/assets/07e920e1-3e09-4c51-8d95-ffef07c49f7f" />
    **Error Test (no auth, 401):**
    ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET
