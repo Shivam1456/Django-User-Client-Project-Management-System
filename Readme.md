@@ -251,6 +251,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
    $root_token = ($response.Content | ConvertFrom-Json).token
    Write-Output $root_token
    ```
+<img width="1533" height="471" alt="image" src="https://github.com/user-attachments/assets/195cddee-a95c-4306-a007-186b7f7dec8e" />
 
    **For `Rohit`:**
    ```python
@@ -264,6 +265,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
    ```python
    $rohit_token = "4f5d7e584ced327d41f41ecd6c0d07391f144619"
    ```
+<img width="1523" height="407" alt="image" src="https://github.com/user-attachments/assets/87330b0d-cab8-4090-8d41-be86ba56e3db" />
 
    **For `Ganesh`:**
    ```python
@@ -277,7 +279,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
    ```python
    $ganesh_token = "dda28b5053414d40ec6216c4d8480733c698a685"
    ```
-
+<img width="1542" height="406" alt="image" src="https://github.com/user-attachments/assets/89170834-07c1-4698-98fd-890d65429cac" />
 2. **List All Clients (GET /clients/):**
    ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
@@ -303,6 +305,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
        }
    ]
    ```
+   <img width="1559" height="418" alt="image" src="https://github.com/user-attachments/assets/07e920e1-3e09-4c51-8d95-ffef07c49f7f" />
    **Error Test (no auth, 401):**
    ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET
