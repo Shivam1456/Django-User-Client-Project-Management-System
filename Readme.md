@@ -70,13 +70,10 @@
 
 
 
-
-Below is a comprehensive documentation file for the **Django User-Client-Project Management System**, detailing the project setup, file structure, steps to clone the GitHub repository, configuration, user creation, and testing all APIs using PowerShell’s `Invoke-WebRequest`. This document assumes a clean setup, addressing previous issues (e.g., `ModuleNotFoundError: pytz`, user ID mismatches, and token errors) and aligns with your requirements (e.g., IST timezone +05:30, `name` for projects/users, no extra fields in client list, `created_by: Rohit` for clients, `created_by: Ganesh` for projects). The project uses Django 5.2.6, Django REST Framework, `mysqlclient`, and `pytz`, with credentials hardcoded in `core/settings.py` (no `.env`).
-
 ### Document: Django User-Client-Project Management System Setup Guide
 
 #### File Structure
-```
+```python
 Django-User-Client-Project-Management-System/
 ├── api/
 │   ├── migrations/
@@ -113,39 +110,39 @@ Django-User-Client-Project-Management-System/
 
 #### Setup Instructions
 1. **Clone the Repository**
-   ```powershell
+   ```python
    cd "C:\Users\Dell 5400\Desktop\Prac-Test"
    git clone https://github.com/Shivam1456/Django-User-Client-Project-Management-System.git
    cd Django-User-Client-Project-Management-System
    ```
 
 2. **Set Up Virtual Environment**
-   ```powershell
+   ```python
    python -m venv venv
    .\venv\Scripts\Activate.ps1
    ```
 
 3. **Install Dependencies**
    Verify `requirements.txt`:
-   ```
+   ```python
    Django==5.2.6
    djangorestframework==3.15.2
    mysqlclient==2.2.4
    pytz==2024.2
    ```
    Install:
-   ```powershell
+   ```python
    pip install -r requirements.txt
    ```
    If errors, reinstall:
-   ```powershell
+   ```python
    pip install Django==5.2.6 djangorestframework==3.15.2 mysqlclient==2.2.4 pytz==2024.2
    pip freeze > requirements.txt
    ```
 
 4. **Verify .gitignore**
    Open `.gitignore` in VSCode. It should contain:
-   ```
+   ```python
    # Virtual environment
    venv/
    __pycache__/
@@ -167,7 +164,7 @@ Django-User-Client-Project-Management-System/
    ```
 
 5. **Configure MySQL Database**
-   ```powershell
+   ```python
    mysql -u root -proot
    ```
    ```sql
@@ -181,12 +178,12 @@ Django-User-Client-Project-Management-System/
    ```
 
 6. **Apply Migrations**
-   ```powershell
+   ```python
    python manage.py makemigrations
    python manage.py migrate
    ```
    Verify tables:
-   ```powershell
+   ```python
    mysql -u root -proot
    ```
    ```sql
@@ -196,7 +193,7 @@ Django-User-Client-Project-Management-System/
    Expected: `api_client`, `api_project`, `api_project_users`, `auth_user`, `authtoken_token`, etc.
 
 7. **Create Users**
-   ```powershell
+   ```python
    python manage.py shell
    ```
    ```python
@@ -208,7 +205,7 @@ Django-User-Client-Project-Management-System/
    exit()
    ```
    Verify:
-   ```sql
+   ```python
    USE nimap_db;
    SELECT id, username, is_staff, is_superuser FROM auth_user;
    ```
@@ -224,7 +221,7 @@ Django-User-Client-Project-Management-System/
    ```
 
 8. **Run Server**
-   ```powershell
+   ```python
    python manage.py runserver
    ```
 
@@ -233,67 +230,67 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
 
 1. **Obtain Tokens**
    **For `root`:**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "root", "password": "root"}'
    ```
    **Response (200 OK):**
-   ```json
+   ```python
    {"token": "<root-token>"}
    ```
    **Extract:**
-   ```powershell
+   ```python
    $response = Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "root", "password": "root"}'
    $root_token = ($response.Content | ConvertFrom-Json).token
    Write-Output $root_token
    ```
 
    **For `Rohit`:**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "Rohit", "password": "test1234"}'
    ```
    **Response (200 OK):**
-   ```json
+   ```python
    {"token": "4f5d7e584ced327d41f41ecd6c0d07391f144619"}
    ```
    **Extract:**
-   ```powershell
+   ```python
    $response = Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "Rohit", "password": "test1234"}'
    $rohit_token = ($response.Content | ConvertFrom-Json).token
    Write-Output $rohit_token
    ```
 
    **For `Ganesh`:**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "Ganesh", "password": "test1234"}'
    ```
    **Response (200 OK):**
-   ```json
+   ```python
    {"token": "dda28b5053414d40ec6216c4d8480733c698a685"}
    ```
    **Extract:**
-   ```powershell
+   ```python
    $response = Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "Ganesh", "password": "test1234"}'
    $ganesh_token = ($response.Content | ConvertFrom-Json).token
    Write-Output $ganesh_token
    ```
 
    Set tokens:
-   ```powershell
+   ```python
    $root_token = "b97f0aee91bf358d83941a285a47ce486f32f6a0"
    $rohit_token = "4f5d7e584ced327d41f41ecd6c0d07391f144619"
    $ganesh_token = "dda28b5053414d40ec6216c4d8480733c698a685"
    ```
 
 2. **List All Clients (GET /clients/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
    ```
    **Response (200 OK, empty):**
-   ```json
+   ```python
    []
    ```
    **After creating clients:**
-   ```json
+   ```python
    [
        {
            "id": 1,
@@ -310,17 +307,17 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    ]
    ```
    **Error Test (no auth, 401):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET
    ```
    Response: `{"detail": "Authentication credentials were not provided."}`
 
 3. **Create a New Client (POST /clients/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method POST -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"} -Body '{"client_name": "Nimap"}'
    ```
    **Response (201 Created):**
-   ```json
+   ```python
    {
        "id": 1,
        "client_name": "Nimap",
@@ -329,11 +326,11 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    }
    ```
    **Second Client (Infotech):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method POST -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"} -Body '{"client_name": "Infotech"}'
    ```
    **Response (201 Created):**
-   ```json
+   ```python
    {
        "id": 2,
        "client_name": "Infotech",
@@ -342,17 +339,17 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    }
    ```
    **Error Test (missing client_name, 400):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method POST -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"} -Body '{}'
    ```
    Response: `{"client_name": ["This field is required."]}`
 
 4. **Retrieve Client Info (GET /clients/<id>/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/2/ -Method GET -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
    ```
    **Response (200 OK, initially):**
-   ```json
+   ```python
    {
        "id": 2,
        "client_name": "Infotech",
@@ -363,7 +360,7 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    }
    ```
    **After project creation:**
-   ```json
+   ```python
    {
        "id": 2,
        "client_name": "Infotech",
@@ -379,17 +376,17 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    }
    ```
    **Error Test (invalid ID, 404):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/999/ -Method GET -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
    ```
    Response: `{"detail": "Not found."}`
 
 5. **Update Client (PATCH /clients/<id>/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/2/ -Method PATCH -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"} -Body '{"client_name": "company A"}'
    ```
    **Response (200 OK):**
-   ```json
+   ```python
    {
        "id": 2,
        "client_name": "company A",
@@ -400,28 +397,28 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    }
    ```
    **Error Test (empty client_name, 400):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/2/ -Method PATCH -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"} -Body '{"client_name": ""}'
    ```
    Response: `{"client_name": ["This field may not be blank."]}`
 
 6. **Delete Client (DELETE /clients/<id>/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/2/ -Method DELETE -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
    ```
    **Response (204 No Content):** (No body)
    **Error Test (invalid ID, 404):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/999/ -Method DELETE -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
    ```
    Response: `{"detail": "Not found."}`
 
 7. **Create Project for Client (POST /clients/<client_id>/projects/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/1/projects/ -Method POST -Headers @{"Authorization"="Token $ganesh_token"; "Content-Type"="application/json"} -Body '{"project_name": "Project A", "users": [{"id": 2, "name": "Rohit"}]}'
    ```
    **Response (201 Created):**
-   ```json
+   ```python
    {
        "id": 1,
        "project_name": "Project A",
@@ -437,23 +434,23 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    }
    ```
    **Error Test (wrong name, 400):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/1/projects/ -Method POST -Headers @{"Authorization"="Token $ganesh_token"; "Content-Type"="application/json"} -Body '{"project_name": "Project A", "users": [{"id": 2, "name": "WrongName"}]}'
    ```
    Response: `{"users": ["Name does not match for user id 2"]}`
 
    **Error Test (non-existent user, 400):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/1/projects/ -Method POST -Headers @{"Authorization"="Token $ganesh_token"; "Content-Type"="application/json"} -Body '{"project_name": "Project A", "users": [{"id": 999, "name": "Rohit"}]}'
    ```
    Response: `{"users": ["User with id 999 does not exist"]}`
 
 8. **List Assigned Projects (GET /projects/)**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/projects/ -Method GET -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
    ```
    **Response (200 OK):**
-   ```json
+   ```python
    [
        {
            "id": 1,
@@ -464,20 +461,20 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
    ]
    ```
    **Error Test (no auth, 401):**
-   ```powershell
+   ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/projects/ -Method GET
    ```
    Response: `{"detail": "Authentication credentials were not provided."}`
 
 #### Update GitHub Repository
 1. **Add and Commit:**
-   ```powershell
+   ```python
    git add .
    git commit -m "Updated project setup and tested all APIs"
    ```
 
 2. **Push to GitHub:**
-   ```powershell
+   ```python
    git push origin main
    ```
 
@@ -485,12 +482,12 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
 
 #### Troubleshooting
 - **Dependency Issues:** If `pip install -r requirements.txt` fails, reinstall:
-  ```powershell
+  ```python
   pip install Django==5.2.6 djangorestframework==3.15.2 mysqlclient==2.2.4 pytz==2024.2
   ```
 - **MySQL Issues:** Ensure `mysql -u root -proot` works and `nimap_db` exists (`SHOW DATABASES;`).
 - **User IDs:** Verify with:
-  ```sql
+  ```python
   USE nimap_db;
   SELECT id, username FROM auth_user;
   ```
@@ -501,7 +498,7 @@ Test APIs using PowerShell’s `Invoke-WebRequest`. Tests are sequential, using 
 # Django User-Client-Project Management System Setup Guide
 
 ## File Structure
-```
+```python
 Django-User-Client-Project-Management-System/
 ├── api/
 │   ├── migrations/
@@ -538,14 +535,14 @@ Django-User-Client-Project-Management-System/
 
 ## Setup Instructions
 1. **Clone the Repository**
-   ```powershell
+   ```python
    cd "C:\Users\Dell 5400\Desktop\Prac-Test"
    git clone https://github.com/Shivam1456/Django-User-Client-Project-Management-System.git
    cd Django-User-Client-Project-Management-System
    ```
 
 2. **Set Up Virtual Environment**
-   ```powershell
+   ```python
    python -m venv venv
    .\venv\Scripts\Activate.ps1
    ```
