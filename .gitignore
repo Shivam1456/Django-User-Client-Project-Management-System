@@ -1,0 +1,21 @@
+# Virtual environment
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Django
+*.log
+*.pot
+*.sqlite3
+local_settings.py
+
+# Environment variables
+.env
+
+# VSCode
+.vscode/
+
+# MySQL database (not uploaded, but ensure no sensitive data)
+*.sql
