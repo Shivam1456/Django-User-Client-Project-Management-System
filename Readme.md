@@ -313,7 +313,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET
    ```
    Response: `{"detail": "Authentication credentials were not provided."}`
-<img width="1559" height="418" alt="image" src="https://github.com/user-attachments/assets/07e920e1-3e09-4c51-8d95-ffef07c49f7f" />
+   <img width="1559" height="418" alt="image" src="https://github.com/user-attachments/assets/07e920e1-3e09-4c51-8d95-ffef07c49f7f" />
 3. **Create a New Client (POST /clients/):**
    ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method POST -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"} -Body '{"client_name": "Nimap"}'
