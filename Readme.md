@@ -271,6 +271,7 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
    ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/login/ -Method POST -Headers @{"Content-Type"="application/json"} -Body '{"username": "Ganesh", "password": "test1234"}'
    ```
+   
    **Response (200 OK):**
    ```python
    {"token": "dda28b5053414d40ec6216c4d8480733c698a685"}
@@ -279,7 +280,8 @@ Run these in PowerShell (in `venv`). Tests are sequential, using `Rohit` for cli
    ```python
    $ganesh_token = "dda28b5053414d40ec6216c4d8480733c698a685"
    ```
-<img width="1542" height="406" alt="image" src="https://github.com/user-attachments/assets/89170834-07c1-4698-98fd-890d65429cac" />
+   <img width="1542" height="406" alt="image" src="https://github.com/user-attachments/assets/89170834-07c1-4698-98fd-890d65429cac" />
+
 2. **List All Clients (GET /clients/):**
    ```python
    Invoke-WebRequest -Uri http://127.0.0.1:8000/clients/ -Method GET -Headers @{"Authorization"="Token $rohit_token"; "Content-Type"="application/json"}
